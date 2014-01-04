@@ -1,0 +1,130 @@
+%\VignetteIndexEntry{ZebrafishDevelopmentalCAGE}
+%\VignetteKeywords{ZebrafishDevelopmentalCAGE}
+%\VignettePackage{ZebrafishDevelopmentalCAGE}
+
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[authoryear,round]{natbib}
+
+\textwidth=6.2in
+\textheight=8.5in
+\oddsidemargin=.1in
+\evensidemargin=.1in
+\headheight=-.3in
+
+\newcommand{\scscst}{\scriptscriptstyle}
+\newcommand{\scst}{\scriptstyle}
+\newcommand{\Rcode}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+
+\author{Vanja Haberle \footnote{Department of Biology, University of Bergen, Bergen,  Norway}}
+
+\title{\textsf{ZebrafishDevelopmentalCAGE: an R data package with CAGE data for zebrafish developmental time course}}
+
+\date{May 27, 2014}
+
+\begin{document}
+<<setup, echo=FALSE>>=
+options(width = 60)
+olocale=Sys.setlocale(locale="C")
+@ 
+\maketitle
+
+\tableofcontents
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+This document briefly describes the content of the \Rpackage{ZebrafishDevelopmentalCAGE} data package. 
+\Rpackage{ZebrafishDevelopmentalCAGE} is a Bioconductor-compliant R package that contains Cap Analysis of Gene Expression (CAGE) sequencing data 
+produced by ZEPROME consortium and originally published by Nepal \emph{et al.} (\cite{Nepal:2013}). CAGE (\cite{Kodzius:2006}) is a high-throughput method for transcriptome
+analysis that utilizes "cap-trapping" (\cite{Carninci:1996}), a technique based on the biotinylation of the 7-methylguanosine cap of Pol II transcripts, 
+to pulldown the 5'-complete cDNAs reversely transcribed from the captured transcripts. This enables the sequencing of short fragments from 5' ends, which can be mapped back to 
+the referent genome to infer the exact position of the transcription start sites (TSSs) used for transcription of captured RNAs. Number of CAGE tags supporting each 
+TSS gives the information on relative frequency of its usage and can be used as a measure of expression from that specific TSS. Thus, CAGE provides information 
+on two aspects of capped transcriptome: genome-wide 1bp-resolution map of transcription start sites and transcript expression levels. This information can be used for 
+various analyses, from 5' centered expression profiling (\cite{Takahashi:2012}) to studying promoter architecture (\cite{Carninci:2006}).
+
+This data package contains genomic coordinates of individual TSSs and number of CAGE tags supporting each TSS in 12 developmental stages throughout zebrafish (\emph{Danio rerio}) early embryonic development:
+\begin{itemize}
+\item
+unfertilized egg
+\item
+fertilized egg
+\item
+64 cells
+\item
+512 cells
+\item
+high
+\item
+oblong
+\item
+sphere / dome
+\item
+dome / 30\% epiboly
+\item
+shield
+\item
+14 somites
+\item
+prim 6
+\item
+prim 20
+\end{itemize}
+
+The CAGE data was produced by the ZEPROME consortium and originally published in the resource paper by Nepal \emph{et al.} (\cite{Nepal:2013}) and subsequently used in the publication by Haberle \emph{et al.} (\cite{Haberle:2014}). The data is mapped to the Zv9 (danRer7) zebrafish genome assembly.
+The \Rpackage{ZebrafishDevelopmentalCAGE} package contains only one dataset named \Rcode{ZebrafishCAGE} that can be loaded via call to \Rcode{data()} function. The dataset is a \Rcode{list} with only one element named \"development\".
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Getting started}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+To load the \Rpackage{ZebrafishDevelopmentalCAGE} package into your R envirnoment type:
+<<>>=
+library(ZebrafishDevelopmentalCAGE)
+@
+
+To list all CAGE samples contained within this package type:
+<<>>=
+data(ZebrafishSamples)
+ZebrafishSamples
+@
+This data.frame lists the names of all CAGE samples alongside with the name of the dataset (ZebrafishCAGE) and the group (development) within which they are contained. Note that the correct \Rcode{dataset}, \Rcode{group} and \Rcode{sample} labels are required for importing and analyzing this CAGE data with \Rpackage{CAGEr} package, as explained further below. 
+\newline
+\newline
+To load the dataset type:
+<<>>=
+data(ZebrafishCAGE)
+names(ZebrafishCAGE)
+head(ZebrafishCAGE[["development"]])
+@
+
+The data is contained within a \Rcode{data.frame} with 15 columns. First 3 columns give the coordinates of individual TSS positions (chromosome, 1-based coordinate of the TSS, strand) and subsequent columns provide counts of CAGE tags supporting given TSS in the 12 zebrafish developmental samples.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Importing data to \Rpackage{CAGEr} package}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The data provided in this package can be further processed and analyzed with \Rpackage{CAGEr} package and can be directly imported using the \Rcode{importPublicData()} function from \Rpackage{CAGEr}.
+Here is an example of how to import data for single developmental stage.
+<<eval=FALSE>>=
+library(CAGEr)
+myCAGEset <- importPublicData(source="ZebrafishDevelopment", 
+dataset="ZebrafishCAGE", group="development", sample="zf_prim6")
+@
+For further details please refer to the vignette of the \Rpackage{CAGEr} package.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Session Info}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<<>>=
+sessionInfo()
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{apalike}
+\bibliography{ZebrafishDevelopmentalCAGE}
+\end{document}
