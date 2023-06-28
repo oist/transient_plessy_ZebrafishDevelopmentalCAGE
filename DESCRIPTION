@@ -1,11 +1,14 @@
 Package: ZebrafishDevelopmentalCAGE
 Title: CAGE data for zebrafish developmental time course
 Version: 0.99.0
-Date: 01-04-2014
-Author: Vanja Haberle, Department of Biology, University of Bergen, Norway <vanja.haberle@bio.uib.no>
-Maintainer: Vanja Haberle <vanja.haberle@bio.uib.no>
+Date: 28-06-2024
+Authors@R:
+  c( person("Vanja",   "Haberle",   email = "vanja.haberle@gmail.com",       role = "aut"),
+     person("Charles", "Plessy",    email = "charles.plessy@oist.jp",        role = "cre")
+  )
 Depends: R (>= 2.15.0)
 Description: CAGE (Cap Analysis Gene Expression) data for zebrafish developmental time course (12 developmental stages) produced by ZEPROME consortium and published by Nepal et al. Genome Research 2013
 License: GPL-3
 biocViews: ExperimentData, Transcription, HighThroughputSequencing
 Packaged: 2014-05-30 15:39:41 UTC; vanja
+LazyData: true
