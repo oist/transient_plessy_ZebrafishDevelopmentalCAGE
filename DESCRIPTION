@@ -12,3 +12,6 @@ License: GPL-3
 biocViews: ExperimentData, Transcription, HighThroughputSequencing
 Packaged: 2014-05-30 15:39:41 UTC; vanja
 LazyData: true
+Roxygen: list(markdown = TRUE)
+Encoding: UTF-8
+RoxygenNote: 7.2.3
