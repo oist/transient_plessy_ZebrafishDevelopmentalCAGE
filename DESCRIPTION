@@ -1,12 +1,17 @@
 Package: ZebrafishDevelopmentalCAGE
 Title: CAGE data for zebrafish developmental time course
-Version: 0.99.0
+Version: 0.999.0
 Date: 28-06-2024
 Authors@R:
   c( person("Vanja",   "Haberle",   email = "vanja.haberle@gmail.com",       role = "aut"),
      person("Charles", "Plessy",    email = "charles.plessy@oist.jp",        role = "cre")
   )
-Depends: R (>= 2.15.0)
+Depends:
+    R (>= 4.1.0)
+Suggests:
+    BSgenome.Drerio.UCSC.danRer7,
+    CAGEr (>= 2.6.0),
+    usethis
 Description: CAGE (Cap Analysis Gene Expression) data for zebrafish developmental time course (12 developmental stages) produced by ZEPROME consortium and published by Nepal et al. Genome Research 2013
 License: GPL-3
 biocViews: ExperimentData, Transcription, HighThroughputSequencing
